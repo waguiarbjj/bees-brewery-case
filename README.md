@@ -1,6 +1,6 @@
 # BEES Data Engineering Case - Open Brewery DB
 
-This project implements a scalable data pipeline using the **Medallion Architecture** (Bronze, Silver, and Gold) to process information from the Open Brewery DB API.
+This project implements a scalable data pipeline using the Medallion Architecture (Bronze, Silver, and Gold) to process information from the Open Brewery DB API.
 
 ---
 
@@ -18,7 +18,7 @@ This project implements a scalable data pipeline using the **Medallion Architect
 The pipeline is structured into three logical layers:
 
 1.  **Bronze (Raw):** Ingests raw data from the API in JSON format.
-2.  **Silver (Curated):** Cleans, deduplicates, and stores data in Parquet format, with **partitioning by location** (`state_province`).
+2.  **Silver (Curated):** Cleans, deduplicates, and stores data in Parquet format, with partitioning by location (`state_province`).
 3.  **Gold (Analytical):** Final data aggregation for business value (brewery count by type and location).
 
 ---
@@ -41,7 +41,7 @@ Unlike Pandas, PySpark was chosen for its distributed processing capabilities. T
 
 ## 🔧 How to Run
 
-Ensure you have **Docker** installed and running. In the project root, run the following command:
+Ensure you have Docker installed and running. In the project root, run the following command:
 
 ```bash
 docker-compose up --build
