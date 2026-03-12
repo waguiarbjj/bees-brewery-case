@@ -18,7 +18,7 @@ O pipeline está dividido em três camadas lógicas:
 ## 🚀 Decisões Técnicas e Resiliência
 
 ### 1. Orquestração Programática (Sem ferramentas externas)
-Optei por **não utilizar ferramentas de orquestração externas** (como Apache Airflow ou Mage.ai) para este desafio. O objetivo foi manter a solução leve, portável e de fácil execução ("One-Click Run"). A orquestração do fluxo de dados é feita de forma programática através de um script `main.py` modularizado, que garante o sequenciamento correto das camadas e o tratamento de erros sem a necessidade de uma infraestrutura complexa de DAGs para este escopo.
+Optei por **não utilizar ferramentas de orquestração externas** (como Apache Airflow ou Mage.ai) para este desafio. O objetivo foi manter a solução leve, portável e de fácil execução ("One-Click Run"). A orquestração do fluxo de dados é feita de forma programática através de um script `main.py` modularizado, que garante o sequenciamento correto das camadas e o tratamento de erros sem a necessidade de uma infraestrutura complexa de DAGs para este escopo. Mantenho o código modular para que, se amanhã precisarmos escalar para o Airflow, basta importar as funções dos meus scripts para dentro das operadoras do Airflow sem precisar reescrever a lógica.
 
 ### 2. Escalabilidade com PySpark
 Diferente do Pandas, o **PySpark** foi escolhido por sua capacidade de processamento distribuído. Isso garante que o pipeline esteja pronto para lidar com grandes volumes de dados (Big Data) seguindo as melhores práticas de Engenharia de Dados.
