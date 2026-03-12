@@ -34,7 +34,7 @@ The data flow orchestration is handled programmatically via a modularized `main.
 Unlike Pandas, PySpark was chosen for its distributed processing capabilities. This ensures the pipeline is ready to handle large data volumes (Big Data) following Data Engineering best practices.
 
 ### 3. Safety and Stability
-* **Controlled Pagination:** I replaced `while True` loops with controlled iterations and exception handling to prevent infinite loops and ensure infrastructure resilience during API ingestion.
+* **Controlled Pagination:** I deliberately replaced unpredictable `while True` loops with a controlled `for` loop combined with a maximum page limit (`max_pages`). This implementation ensures the process is finite and safe. Additionally, the logic includes an early-exit condition that breaks the loop immediately if the API returns an empty dataset, preventing unnecessary requests and resource exhaustion.
 * **Storage Performance:** Using partitioned Parquet in the Silver layer optimizes read performance and reduces storage costs.
 
 ---
