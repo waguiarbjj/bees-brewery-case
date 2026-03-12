@@ -1,34 +1,47 @@
 # BEES Data Engineering Case - Open Brewery DB
 
-Este projeto implementa um pipeline de dados escalável utilizando a **Arquitetura Medallion** (Bronze, Silver e Gold) para processar informações da API Open Brewery DB.
+This project implements a scalable data pipeline using the **Medallion Architecture** (Bronze, Silver, and Gold) to process information from the Open Brewery DB API.
 
-## 🛠️ Tecnologias Utilizadas
+---
+
+## 🛠️ Tech Stack
 
 * **Python 3**
 * **Apache Spark (PySpark)**
 * **Docker & Docker Compose**
-* **Parquet** (Formato de armazenamento)
+* **Parquet** (Columnar Storage Format)
 
-## 🏗️ Arquitetura do Projeto
-O pipeline está dividido em três camadas lógicas:
-1.  **Bronze (Raw):** Ingestão dos dados brutos da API em formato JSON.
-2.  **Silver (Curated):** Limpeza, deduplicação e armazenamento em formato Parquet, com **particionamento por localização** (`state_province`).
-3.  **Gold (Analytical):** Agregação final dos dados para entrega de valor ao negócio (contagem de cervejarias por tipo e localização).
+---
 
-## 🚀 Decisões Técnicas e Resiliência
+## 🏗️ Project Architecture
 
-### 1. Orquestração Programática (Sem ferramentas externas)
-Optei por **não utilizar ferramentas de orquestração externas** (como Apache Airflow ou Mage.ai) para este desafio. O objetivo foi manter a solução leve, portável e de fácil execução ("One-Click Run"). A orquestração do fluxo de dados é feita de forma programática através de um script `main.py` modularizado, que garante o sequenciamento correto das camadas e o tratamento de erros sem a necessidade de uma infraestrutura complexa de DAGs para este escopo. Mantenho o código modular para que, se amanhã precisarmos escalar para o Airflow, basta importar as funções dos meus scripts para dentro das operadoras do Airflow sem precisar reescrever a lógica.
+The pipeline is structured into three logical layers:
 
-### 2. Escalabilidade com PySpark
-Diferente do Pandas, o **PySpark** foi escolhido por sua capacidade de processamento distribuído. Isso garante que o pipeline esteja pronto para lidar com grandes volumes de dados (Big Data) seguindo as melhores práticas de Engenharia de Dados.
+1.  **Bronze (Raw):** Ingests raw data from the API in JSON format.
+2.  **Silver (Curated):** Cleans, deduplicates, and stores data in Parquet format, with **partitioning by location** (`state_province`).
+3.  **Gold (Analytical):** Final data aggregation for business value (brewery count by type and location).
 
-### 3. Segurança e Estabilidade
-* **Paginação Controlada:** Substituí o uso de `while True` por laços controlados e tratamento de exceções para evitar loops infinitos e garantir a resiliência da infraestrutura durante a ingestão da API.
-* **Storage Performance:** O uso de **Parquet particionado** na camada Silver otimiza a performance de leitura e reduz custos de armazenamento.
+---
 
-## 🔧 Como Executar
-Certifique-se de ter o **Docker** instalado e rodando. Na raiz do projeto, execute:
+## 🚀 Technical Decisions & Resilience
+
+### 1. Programmatic Orchestration (No external tools)
+I chose **not to use external orchestration tools** (such as Apache Airflow or Mage.ai) for this challenge. The goal was to keep the solution lightweight, portable, and easy to run ("One-Click Run"). 
+
+The data flow orchestration is handled programmatically via a modularized `main.py` script, ensuring proper sequencing and error handling without the overhead of a complex DAG infrastructure for this scope. I kept the code modular so that, if scaling to Airflow is required in the future, the existing functions can be easily imported into Airflow operators without rewriting logic.
+
+### 2. Scalability with PySpark
+Unlike Pandas, **PySpark** was chosen for its distributed processing capabilities. This ensures the pipeline is ready to handle large data volumes (Big Data) following Data Engineering best practices.
+
+### 3. Safety and Stability
+* **Controlled Pagination:** I replaced `while True` loops with controlled iterations and exception handling to prevent infinite loops and ensure infrastructure resilience during API ingestion.
+* **Storage Performance:** Using **partitioned Parquet** in the Silver layer optimizes read performance and reduces storage costs.
+
+---
+
+## 🔧 How to Run
+
+Ensure you have **Docker** installed and running. In the project root, run the following command:
 
 ```bash
 docker-compose up --build
