@@ -1,0 +1,9 @@
+# Ignorar a pasta de dados local (Data Lake)
+data/
+
+# Ignorar arquivos temporários do Python
+__pycache__/
+*.pyc
+
+# Ignorar pastas do VS Code
+.vscode/
