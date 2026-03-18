@@ -11,7 +11,16 @@ This project implements a scalable data pipeline using the Medallion Architectur
 * Docker & Docker Compose
 * Parquet (Columnar Storage Format)
 
----
+## 🛡️ Technical Approach & Design Decisions
+This project was architected to demonstrate a production-ready Data Engineering pipeline, focusing on the following core principles:
+
+Data Quality & Integrity: To mitigate risks associated with raw API data, the Silver Layer implements strict schema enforcement and data cleansing. Using the Parquet format ensures data types are preserved and optimized for downstream consumption, preventing "data drift."
+
+Strategic Aggregation: Business logic is centralized in the Gold Layer. Instead of scattered queries, I implemented specific aggregations (e.g., breweries by type and location) to provide a single source of truth for analytical metrics, ensuring consistency across reports.
+
+Scalability & Partitioning: The pipeline is designed to handle high volumes by utilizing partitioning strategies. This optimizes query performance and reduces cloud infrastructure costs by limiting the amount of data scanned during transformations.
+
+Reliable Workflow: The repository structure follows modular engineering standards, facilitating collaboration and version control (Git). This architecture allows for clear traceability and easy rollbacks, ensuring a stable production environment.
 
 ## 🏗️ Project Architecture
 
@@ -20,8 +29,6 @@ The pipeline is structured into three logical layers:
 1. Bronze (Raw): Ingests raw data from the API in JSON format using a resilient ingestion script.
 2. Silver (Curated): Performs data cleaning, deduplication, and standardization. Data is stored in Parquet format and partitioned by location.
 3. Gold (Analytical): Final data aggregation for business value, providing a view of brewery counts by type and location.
-
----
 
 ## 🚀 Technical Decisions & Resilience
 
